@@ -2,6 +2,19 @@
 import React from 'react'
 import { connect } from  'react-redux'
 import { addGun,removeGun,addGunAsync } from  './index.redux'
+//我们需要的那些数据
+// const mapStatetoProps=(state)=>{  //将actions塞进去props里面
+//     return {num:state}
+// }
+// const actionCreators= { addGun,removeGun,addGunAsync }  ////将actions塞进去props里面
+
+//App = connect(mapStatetoProps,actionCreators)(App)
+@connect(
+    //你需要state的什么属性传入props中
+    state=>({num:state}),
+    //你需要什么方法放到props中  自动会dispatch
+    { addGun,removeGun,addGunAsync }
+)
 class App extends React.Component{
     // constructor(props){
     //     super(props)
@@ -17,11 +30,5 @@ class App extends React.Component{
         ) 
     }
 }
-//我们需要的那些数据
-const mapStatetoProps=(state)=>{  //将actions塞进去props里面
-    return {num:state}
-}
-const actionCreators= { addGun,removeGun,addGunAsync }  ////将actions塞进去props里面
 
-App = connect(mapStatetoProps,actionCreators)(App)
 export default App

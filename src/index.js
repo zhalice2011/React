@@ -3,19 +3,43 @@ import ReactDom from 'react-dom'
 import { createStore,applyMiddleware,compose } from 'redux' //applyMiddleware处理中间件
 import thunk  from 'redux-thunk'
 import { Provider } from 'react-redux'
+import { BrowserRouter,Route,Link } from 'react-router-dom'  //引入路由
 import App from './App'
 import { counter} from './index.redux'
+
 
 const store = createStore(counter,compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f=>f
 ))
-
+function Eerying(){
+    return <h2>二营</h2>
+}
+function Qibinglian(){
+    return <h2>骑兵连</h2>
+}
 ReactDom.render(
     (<Provider store={store}>
-        <App />
-    </Provider>)
-    ,document.getElementById('root')
+        <BrowserRouter>
+            <div>
+                <ul>
+                    <li>
+                        <Link to="/">根目录</Link>
+                    </li>
+                    <li>
+                        <Link to="/erying">一营</Link>
+                    </li>
+                    <li>
+                        <Link to="/qibinglian">骑兵连</Link>
+                    </li>
+                </ul>
+                <Route path='/' exact component={App}></Route>
+                <Route path='/erying' component={Eerying}></Route>
+                <Route path='/qibinglian' component={Qibinglian}></Route>
+            </div>  
+        </BrowserRouter>  
+    </Provider>),
+    document.getElementById('root')
 )    
 
 
