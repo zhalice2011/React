@@ -9,6 +9,7 @@ import AuthRoute from './component/authroute/authroute'
 import reducers from './reducer'
 
 import './config'
+import './index.css'
 import 'antd-mobile/dist/antd-mobile.css'
 import Login from './container/login/login'
 import Register from './container/register/register'

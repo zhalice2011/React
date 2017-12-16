@@ -37,9 +37,7 @@ class AuthRoute extends React.Component{
     }
     render(){
         return(
-            <div >
-                <p>判断跳转的组件</p>
-            </div>
+            null
         )
     }
 }
