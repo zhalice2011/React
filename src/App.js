@@ -1,27 +1,27 @@
 
 import React from 'react'
-import {addGun} from './index.redux'
-
+import { connect } from  'react-redux'
+import { addGun,removeGun,addGunAsync } from  './index.redux'
 class App extends React.Component{
     // constructor(props){
     //     super(props)
     // }
     render(){
-        const store = this.props.store
-        const num = store.getState()
-        console.log("num",num)
         return(
             <div>
-                <h1>现在有机枪{num}</h1>
-                {console.log("周达理",addGun())
-                    //let a = addGun()
-                    //console.log(addGun())
-                }
-                <button onClick={()=>store.dispatch(addGun())}>申请武器</button>
-                <button onClick={()=>store.dispatch({type:"加激光枪"})}>申请武器</button>
+                <h1>现在有机枪{this.props.num}</h1>
+                <button onClick={this.props.addGun}>申请武器</button>
+                <button onClick={this.props.removeGun}>上交武器</button>
+                <button onClick={this.props.addGunAsync}>拖两天再给</button>
                 </div>
         ) 
     }
 }
+//我们需要的那些数据
+const mapStatetoProps=(state)=>{  //将actions塞进去props里面
+    return {num:state}
+}
+const actionCreators= { addGun,removeGun,addGunAsync }  ////将actions塞进去props里面
 
+App = connect(mapStatetoProps,actionCreators)(App)
 export default App

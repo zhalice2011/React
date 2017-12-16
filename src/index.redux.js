@@ -33,3 +33,11 @@ export function removeGun(){
 }
 
 
+//暴露一个异步的函数  
+export function addGunAsync(dispath){
+    return dispath=>{
+        setTimeout(()=>{
+            dispath(addGun())
+        },2000)
+    }
+}

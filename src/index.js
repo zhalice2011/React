@@ -1,16 +1,39 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { createStore } from 'redux'
+import { createStore,applyMiddleware,compose } from 'redux' //applyMiddleware处理中间件
+import thunk  from 'redux-thunk'
+import { Provider } from 'react-redux'
 import App from './App'
-import { counter } from './index.redux'
-const store = createStore(counter)
-function render(){
-    console.log("执行render函数",store)
-    
-    ReactDom.render(<App store={store} />,document.getElementById('root'))    
-}
-render()
-store.subscribe(render)
+import { counter} from './index.redux'
+
+const store = createStore(counter,compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f=>f
+))
+
+ReactDom.render(
+    (<Provider store={store}>
+        <App />
+    </Provider>)
+    ,document.getElementById('root')
+)    
+
+
+
+
+
+
+
+
+
+// function render(){
+//     console.log("执行render函数",store)
+//     //store={store} addGun={addGun} 这是参数
+//     ReactDom.render(<App store={store} addGun={addGun} removeGun={removeGun} addGunAsync={addGunAsync} />,document.getElementById('root'))    
+// }
+// render()
+// //当state有任何变化 就会执行render这个函数  
+// store.subscribe(render)  //subscribe函数要传入一个函数的名字
 
 
 
