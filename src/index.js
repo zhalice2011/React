@@ -3,40 +3,38 @@ import ReactDom from 'react-dom'
 import { createStore,applyMiddleware,compose } from 'redux' //applyMiddleware处理中间件
 import thunk  from 'redux-thunk'
 import { Provider } from 'react-redux'
-import { BrowserRouter,Route,Link } from 'react-router-dom'  //引入路由
-import App from './App'
-import { counter} from './index.redux'
+import { BrowserRouter,Route,Link,Redirect,Switch } from 'react-router-dom'  //引入路由
+// import { counter} from './index.redux'
+import reducer from './reducer'
+import Auth from './Auth.js'
+import Dashboard from './Dashboard.js'
 
 
-const store = createStore(counter,compose(
+const store = createStore(reducer,compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f=>f
 ))
-function Eerying(){
-    return <h2>二营</h2>
+console.log(store.getState())
+
+//当一个组件作为路由的时候
+class Test extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        console.log(this.props)
+        return  <h2>测试{this.props.match.params.location}</h2>
+    }
 }
-function Qibinglian(){
-    return <h2>骑兵连</h2>
-}
+//登录  没有登录信息统一跳转login  页面 导航+注销 一营 二营  骑兵连
 ReactDom.render(
     (<Provider store={store}>
         <BrowserRouter>
-            <div>
-                <ul>
-                    <li>
-                        <Link to="/">根目录</Link>
-                    </li>
-                    <li>
-                        <Link to="/erying">一营</Link>
-                    </li>
-                    <li>
-                        <Link to="/qibinglian">骑兵连</Link>
-                    </li>
-                </ul>
-                <Route path='/' exact component={App}></Route>
-                <Route path='/erying' component={Eerying}></Route>
-                <Route path='/qibinglian' component={Qibinglian}></Route>
-            </div>  
+                <Switch>
+                    <Route path='/login'  component={Auth}></Route>
+                    <Route path='/dashboard'  component={Dashboard}></Route>
+                    <Redirect to='/dashboard'></Redirect>                    
+                </Switch>
         </BrowserRouter>  
     </Provider>),
     document.getElementById('root')

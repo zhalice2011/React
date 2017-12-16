@@ -1,5 +1,3 @@
-
-
 // 定义常量
 const ADD_GUN = '加激光枪'
 const REMOVE_GUN = '减激光枪'
