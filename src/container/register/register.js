@@ -3,6 +3,7 @@ import React from 'react'
 import Logo from '../../component/logo/logo'
 import {List, InputItem,Radio,WingBlank,WhiteSpace,Button} from 'antd-mobile'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { register } from '../../redux/user.redux'
 
 //@connect获取状态和方法
@@ -35,6 +36,7 @@ class Register extends React.Component{
         
         return (
             <div>
+                {this.props.redirctTo ? <Redirect to={this.props.redirctTo}/> :null}
                 <Logo></Logo>
                 <h2>注册页</h2>
                 <List>

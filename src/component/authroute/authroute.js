@@ -3,7 +3,14 @@
 import React from 'react'
 import axios from 'axios'
 import {withRouter} from  'react-router-dom'
+import {loadData} from '../../redux/user.redux'
+import { connect } from 'react-redux'
+
 @withRouter
+@connect(
+    null,
+    {loadData}
+)
 class AuthRoute extends React.Component{
     constructor(props){
         super(props)
@@ -20,7 +27,8 @@ class AuthRoute extends React.Component{
             .then(res=>{
                 if (res.status==200){
                     if(res.data.code==0){ //表示有登录信息的
-
+                        this.props.loadData(res.data.data)  //这个会调用redux里面的loadData函数 
+                       
                     }else{ //没有登录信息的
                         console.log(this.props.history)  //不是路由组件
                         //跳转到登录的页面
