@@ -6,9 +6,12 @@ const utils = require('utility')
 const _filter = {'pwd':0,'__v':0}  //一个findcase 不显示password
 
 Router.get('/list',function(req,res){
+
+    //const type = req.query.type
+    const { type } = req.query  //获取查询参数type
     //User.remove({},function(err,doc){})
-    User.find({},function(err,doc){
-        return res.json(doc)
+    User.find({type},function(err,doc){
+        return res.json({code:0,data:doc})
     })
 })
 //注册请求
@@ -63,7 +66,7 @@ Router.post('/login',function(req,res){
         }
     })
 })
-
+//获取info页面
 Router.get('/info',function(req,res){
     //查看请求里面有没有cookie
     const { userid } = req.cookies
@@ -80,6 +83,25 @@ Router.get('/info',function(req,res){
             return res.json({code:0,data:doc})   
         }
              
+    })
+})
+//完善info信息页面
+Router.post('/update',function(req,res){
+    //先获取cookie
+    const userid = req.cookies.userid
+    console.log("完善info信息页面,前端传入的userid:",userid,"req.body",req.body)
+    if(!userid){
+        return json.dumps({code:1})
+    }
+    //修改基本信息
+    const body = req.body
+    User.findByIdAndUpdate(userid,body,function(err,doc){
+        const data = Object.assign({},{   //ps: Object.assign方法其实就是合并两个对象
+            user:doc.user,
+            type:doc.type,
+        },body)
+        console.log("传给前台的data",data)    
+        return res.json({code:0,data})
     })
 })
 

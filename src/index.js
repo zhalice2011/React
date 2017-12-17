@@ -12,25 +12,32 @@ import './config'
 import './index.css'
 import 'antd-mobile/dist/antd-mobile.css'
 import Login from './container/login/login'
+import BossInfo from './container/bossinfo/bossinfo'
+import GeniusInfo from './container/geniusinfo/geniusinfo'
 import Register from './container/register/register'
+import Dashboard from './component/dashboard/dashboard'
 
 
 const store = createStore(reducers,compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f=>f
 ))
-function Boss(){
-    return <h2>我是BOSS页面</h2>
-}
+
+
 //登录  没有登录信息统一跳转login  页面 导航+注销 一营 二营  骑兵连
 ReactDom.render(
     (<Provider store={store}>
         <BrowserRouter>
             <div>
                 <AuthRoute></AuthRoute>
-                <Route path="/boss" component={Boss}></Route>
-                <Route path="/login" component={Login}></Route>
-                <Route path="/register" component={Register}></Route>
+                <Switch>
+                    <Route path="/bossinfo" component={BossInfo}></Route>
+                    <Route path="/geniusinfo" component={GeniusInfo}></Route>
+                    <Route path="/login" component={Login}></Route>
+                    <Route path="/register" component={Register}></Route>
+                    <Route component={Dashboard}></Route>
+                </Switch>
+
             </div>
         </BrowserRouter>  
     </Provider>),
