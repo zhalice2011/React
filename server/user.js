@@ -6,12 +6,14 @@ const utils = require('utility')
 const _filter = {'pwd':0,'__v':0}  //一个findcase 不显示password
 
 Router.get('/list',function(req,res){
-
     //const type = req.query.type
     const { type } = req.query  //获取查询参数type
+    console.log("前台传入的type=",type)
     //User.remove({},function(err,doc){})
     User.find({type},function(err,doc){
+        console.log("后台返回的数据=doc",doc)
         return res.json({code:0,data:doc})
+        
     })
 })
 //注册请求

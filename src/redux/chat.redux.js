@@ -1,4 +1,4 @@
-
+import axios from 'axios'
 //关于消息管理的redux
 
 //定义常量
@@ -10,10 +10,10 @@ const initState = {
 } 
 
 //定义reducer
-function chatuser(state=initState,action){
+export function chatuser(state=initState,action){
     switch(action.type){
         case USER_LIST:
-
+            return {...state,userlist:action.payload}
         default :
             return state
     }   
@@ -25,7 +25,8 @@ function userList(data){
 }
 
 //具体操作的函数
-function getUserList(type){
+export function getUserList(type){
+    console.log("getUserList函数 传入的type",type)
     return dispatch=>{
         axios.get('/user/list?type='+type)
         .then(res=>{
