@@ -12,9 +12,9 @@ class NavLinkBar extends React.Component{
         super(props)
     }
     render(){
-        console.log("传过来的所有navList",this.props.data)
+        //console.log("传过来的所有navList",this.props.data)
         const navList = this.props.data.filter(v=>!v.hide)  //将hide是true的从导航栏里面去掉
-        console.log("过滤掉的navList",navList)
+        //console.log("过滤掉的navList",navList)
         const {pathname} = this.props.location
         return (
             <div>

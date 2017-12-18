@@ -4,13 +4,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import NavLinkBar from  '../../component/navLinkBar/navLinkBar'
 import {Switch,Route} from 'react-router-dom'
-import Boss from '../../component/boss/boss'
+import Boss from '../../component/boss/boss'  //老板
 import Msg from '../../component/msg/msg'
-import User from '../../component/user/user'
-
-function Genins (){
-    return <h2>Genins的首页</h2>
-}
+import User from '../../component/user/user' //老板 boss
+import Genius from '../../component/genius/genius'//药师
 
 @connect(
     state=>state
@@ -31,14 +28,14 @@ class Dashboard extends React.Component{
                 icon:'boss',
                 title:'药师列表',
                 component:Boss,
-                hide:user.type=='genins'
+                hide:user.type=='genius'
             },
             {
                 path:'/genius',
                 text:'药师',
                 icon:'job',
                 title:'会员列表',
-                component:Genins,
+                component:Genius,
                 hide:user.type=='boss'
             },
             {
@@ -50,7 +47,7 @@ class Dashboard extends React.Component{
             },
             {
                 path:'/me',
-                text:'me',
+                text:'我',
                 icon:'user',
                 title:'个人中心',
                 component:User,
@@ -58,7 +55,7 @@ class Dashboard extends React.Component{
         ]
         return (
             <div>
-                <NavBar className='fixd-header' mode="dark">{navList.find(v=>v.path==pathname).title}</NavBar>
+                <NavBar className='fixd-header' mode="dark">{navList.find(v=>v.path==pathname).title||''}</NavBar>
                 <div style={{marginTop:45}}>
                     <Switch>
                         {navList.map(v=>(

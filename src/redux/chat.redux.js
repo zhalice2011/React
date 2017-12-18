@@ -11,6 +11,7 @@ const initState = {
 
 //定义reducer
 export function chatuser(state=initState,action){
+    console.log("state",state,"action",action.type)
     switch(action.type){
         case USER_LIST:
             return {...state,userlist:action.payload}
@@ -31,7 +32,7 @@ export function getUserList(type){
         axios.get('/user/list?type='+type)
         .then(res=>{
             if (res.data.code==0){
-                console.log("数据获取成功")
+                console.log("数据获取成功然后调用action userList 传入type和",res.data.data)
                 //将获取的数据方法state里面
                 dispatch(userList(res.data.data))
             }

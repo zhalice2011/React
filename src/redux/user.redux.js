@@ -19,12 +19,12 @@ const initState={
 
 //定义reducer
 export function user(state=initState,action){
-    console.log("此时的state",state)
-    console.log("此时的数据",action.payload)
+    //console.log("此时的state",state)
+    //console.log("此时的数据",action.payload)
     //判断不同的action.type
     switch(action.type){
         case AUTH_SUCCESS:
-            console.log("身份信息校验成功!")
+            //console.log("身份信息校验成功!")
             return {...state,msg:'',redirctTo:getRedirectPath(action.payload),...action.payload}        
         case ERROR_MSG: //注册失败
             return {...state,isAuth:false,msg:action.msg}   

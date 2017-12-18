@@ -10,14 +10,20 @@ import UserCard from '../usercard/usercard'
     state=>state.chatuser,
     {getUserList}
 )
-class Boss extends React.Component{
+class Genius extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            data:[]
+        }
+    }
     componentDidMount(){ //在这里axios获取会员/牛人的列表
-        this.props.getUserList('genius')  //调用redux里面的函数 传入一个type
+        this.props.getUserList('boss')  //调用redux里面的函数 传入一个type
     }
     render(){
         console.log("boss页面的state",this.state)
-        console.log("this.props.userList",this.props.userlist)
+        console.log("this.genius页面中的.userList",this.props.userlist)
         return <UserCard userlist={this.props.userlist}></UserCard>
     }
 }
-export default Boss
+export default Genius
