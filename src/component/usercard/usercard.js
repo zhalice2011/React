@@ -4,7 +4,11 @@ import { Card,WhiteSpace,WingBlank } from 'antd-mobile'
 
 
 //只负责显示数据card列表
+@withRouter
 class UserCard extends React.Component{
+    handleClick(v){
+        this.props.history.push(`/chat/${v.user}`)
+    }
     render(){
         console.log("userlist",this.props.userlist)
         const a=this.props.userlist||[]
@@ -13,7 +17,10 @@ class UserCard extends React.Component{
                 <WhiteSpace></WhiteSpace>  
                 {a.map(v=>(
                     v.avatar ?(
-                    <Card key={v._id}>
+                    <Card 
+                        key={v._id}
+                        onClick={()=>this.handleClick(v)}
+                        >
                         <Card.Header
                             title={v.user}  //用户名
                             thumb={require(`../img/${v.avatar}.png`)}

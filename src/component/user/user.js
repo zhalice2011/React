@@ -3,6 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { Result,List,WhiteSpace,Modal } from 'antd-mobile'
 import browserCookie from 'browser-cookies'
+import { Redirect } from 'react-router-dom'
 import './user.css'
 import {logoutSubmit} from '../../redux/user.redux'
 
@@ -17,13 +18,26 @@ class User extends React.Component{
     }
     logout(){
         const alert = Modal.alert
-        alert('注销','确认退出登录吗?'[
-            {text:'取消',onPress:()=>console.log("取消")},
-            {text:'取消',onPress:()=>{
+        // alert('注销','确认退出登录吗?'[
+        //     {text:'取消',onPress:()=>console.log("取消")},
+        //     {text:'确认',onPress:()=>{
+        //         browserCookie.erase('userid')
+        //         this.props.logoutSubmit()
+        //     }}
+        // ])
+        alert('注销', 'Are you sure???', [
+            { text: '取消', onPress: () => {
                 browserCookie.erase('userid')
-                window.location.href = window.location.href 
-                this.props.logoutSubmit()
-            }}
+                console.log("有人吗2")
+            } },
+            {
+              text: '确认',
+              onPress: () => {
+                  console.log("有人吗")
+                  browserCookie.erase('userid')
+                  this.props.logoutSubmit()
+              },
+            },
         ])
     }   
     render(){
@@ -33,6 +47,7 @@ class User extends React.Component{
         const Brief = Item.Brief
         return props.user?(
             <div>
+                {props.redirctTo ? <Redirect to={props.redirctTo}/> :null}
                 <Result 
                     img={<img style={{width:50}} src={require(`../img/${props.avatar}.png`)} alt=""/>}
                     title={props.user}

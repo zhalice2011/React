@@ -2,11 +2,10 @@ import axios from 'axios'
 import {getRedirectPath} from '../util'
 
 //定义常量
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const ERROR_MSG = 'ERROR_MSG'
 const LOAD_DATA = 'LOAD_DATA'
+const LOGOUT = 'LOGOUT'
 //用户的初始状态 需要用户信息的时候都来这个里面取数据
 const initState={
     redirctTo:'',//用户应该跳转到什么地方    
@@ -30,6 +29,8 @@ export function user(state=initState,action){
             return {...state,isAuth:false,msg:action.msg}   
         case LOAD_DATA:
             return {...state,...action.payload}
+        case LOGOUT:
+            return {...initState,redirctTo:'/login'}
             default:
             return state
     }
@@ -89,6 +90,9 @@ export function login({user,pwd}){
 export function loadData(userinfo){
     return {type:LOAD_DATA,payload:userinfo}
 }
+export function logoutSubmit(){
+    return {type:LOGOUT}
+}
 
 //用户传递进来的完善信息的数据
 export function update(data){  //用户传递进来的完善信息的数据
@@ -105,3 +109,7 @@ export function update(data){  //用户传递进来的完善信息的数据
             })
     }
 }
+
+
+//退出登录
+//export function lo

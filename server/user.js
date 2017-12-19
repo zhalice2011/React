@@ -53,10 +53,7 @@ Router.post('/login',function(req,res){
                 //设置cookie  将mongodb生成的用户唯一表示写入cookie中
                 res.cookie('userid',doc._id)  
 
-                return res.json({code:0,data:{
-                    type:doc.type,
-                    user:doc.user
-                }})
+                return res.json({code:0,data:doc})
             }else{
                 return res.json({code:1,msg:"密码错误"})
             }

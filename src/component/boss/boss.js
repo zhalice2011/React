@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import {getUserList} from '../../redux/chat.redux'
 import UserCard from '../usercard/usercard'
 
+//boss页面显示所有用户的列表
 @withRouter
 @connect(
     state=>state.chatuser,
