@@ -1,11 +1,7 @@
 import React from 'react'
 import { NavBar,Grid,List } from 'antd-mobile'
-import PropTypes from 'prop-types'
 
 class AvatarSelector extends React.Component{
-    static propTypes={
-        selectAvatar:PropTypes.func.isRequired
-    }
     constructor(props){
         super(props)
         this.state={}
@@ -21,7 +17,7 @@ class AvatarSelector extends React.Component{
         //显示已经选择的表
         const gridHeader = this.state.icon ? (<div>
                                                 <span>已选择头像</span>
-                                                <img style={{height:16,width:16}} src={this.state.icon}/>
+                                                <img style={{height:16,width:16}} alt='' src={this.state.icon}/>
                                               </div>)
                                             : <div>请选择头像</div>
         return (

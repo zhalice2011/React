@@ -2,6 +2,7 @@ const express = require('express')
 const Router = express.Router()
 const models = require('./module') //引入这个数据库相关js文件
 const User = models.getModels('user')  //获取user模型
+const Chat = models.getModels('chat')  //获取chat模型
 const utils = require('utility')
 const _filter = {'pwd':0,'__v':0}  //一个findcase 不显示password
 
@@ -109,5 +110,19 @@ function md5Pwd(pwd){
     const salt = 'cherise_i_love_youZhalice2011#$%#@@$%'
     return utils.md5(utils.md5(pwd+salt))
 }
+
+
+//获取聊天信息
+Router.get('/getmsglist',function(req,res){
+    //查看请求里面有没有cookie
+    const user = req.cookies.user
+    console.log("user")
+    //{'$or':[{from:user,to:user}]}
+    Chat.find({},function(e,doc){
+        if(!e) {
+            return res.json({code:0,msgs:doc})
+        }
+    })
+})
 
 module.exports = Router

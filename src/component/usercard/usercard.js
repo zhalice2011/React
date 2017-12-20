@@ -7,10 +7,10 @@ import { Card,WhiteSpace,WingBlank } from 'antd-mobile'
 @withRouter
 class UserCard extends React.Component{
     handleClick(v){
-        this.props.history.push(`/chat/${v.user}`)
+        this.props.history.push(`/chat/${v._id}`)
     }
     render(){
-        console.log("userlist",this.props.userlist)
+        //console.log("userlist",this.props.userlist)
         const a=this.props.userlist||[]
         return(
             <WingBlank>

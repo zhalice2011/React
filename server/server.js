@@ -3,7 +3,9 @@ const utils = require('utility')
 const userRouter = require('./user')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-
+const models = require('./module') //引入这个数据库相关js文件
+const User = models.getModels('user')  //获取user模型
+const Chat = models.getModels('chat')  //获取chat模型
 
 const app = express()
 
@@ -14,9 +16,17 @@ const io = require('socket.io')(server)  //现在io和express就关联起来了
 
 //监听事件
 io.on('connection',function(socket){ //soket是当前监听的链接  io是全局的连接
-    //console.log('用户已经登录')
     socket.on('sendmsg',function(data){
-        console.log(data)
+        console.log("前台传入的东西",data)
+
+        const {from , to ,msg} =data 
+
+        //生成唯一id 通过两个用户的id来定义
+        const chatid = [from,to].sort().join('_')
+        //消息存入数据库
+        Chat.create({chatid,from,to,content:msg},function(err,doc){
+            io.emit('recvmsg',Object.assign({},doc._doc))
+        })
         io.emit('recvmsg',data) //将接受到的数据发送到全局
     })
 })

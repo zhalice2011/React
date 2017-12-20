@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavBar,Grid,List } from 'antd-mobile'
+import { NavBar } from 'antd-mobile'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import NavLinkBar from  '../../component/navLinkBar/navLinkBar'
@@ -18,9 +18,9 @@ class Dashboard extends React.Component{
     }
     render(){
         const {pathname} = this.props.location
-        console.log("pathname",pathname)
+        //console.log("pathname",pathname)
         const user = this.props.user
-        console.log("pathname",user)
+        //console.log("pathname",user)
         const navList = [
             {
                 path:'/boss',
@@ -28,7 +28,7 @@ class Dashboard extends React.Component{
                 icon:'boss',
                 title:'药师列表',
                 component:Boss,
-                hide:user.type=='genius'
+                hide:user.type==='genius'
             },
             {
                 path:'/genius',
@@ -36,7 +36,7 @@ class Dashboard extends React.Component{
                 icon:'job',
                 title:'会员列表',
                 component:Genius,
-                hide:user.type=='boss'
+                hide:user.type==='boss'
             },
             {
                 path:'/msg',

@@ -1,13 +1,9 @@
 import React from 'react'
 import { TabBar } from 'antd-mobile'
-import PropTypes from 'prop-types'
 import {withRouter} from 'react-router-dom'
 
 @withRouter
 class NavLinkBar extends React.Component{
-    // static PropTypes ={
-    //     data:PropTypes.array.isRequired  //制定传入的是数组
-    // }
     constructor(props){
         super(props)
     }
