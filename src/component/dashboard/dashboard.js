@@ -1,16 +1,18 @@
 import React from 'react'
-import { NavBar } from 'antd-mobile'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { NavBar } from 'antd-mobile'
 import NavLinkBar from  '../../component/navLinkBar/navLinkBar'
 import {Switch,Route} from 'react-router-dom'
 import Boss from '../../component/boss/boss'  //老板
 import Msg from '../../component/msg/msg'
 import User from '../../component/user/user' //老板 boss
 import Genius from '../../component/genius/genius'//药师
+import { getMsgList,recvMsg} from '../../redux/chatnew.redux'
+
 
 @connect(
-    state=>state
+    state=>state,
+    {getMsgList,recvMsg}
 )
 class Dashboard extends React.Component{
     constructor(props){
@@ -24,7 +26,7 @@ class Dashboard extends React.Component{
         const navList = [
             {
                 path:'/boss',
-                text:'会员',
+                text:'牛人',
                 icon:'boss',
                 title:'药师列表',
                 component:Boss,

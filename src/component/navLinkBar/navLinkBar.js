@@ -1,8 +1,12 @@
 import React from 'react'
 import { TabBar } from 'antd-mobile'
 import {withRouter} from 'react-router-dom'
+import {connect}  from 'react-redux'
 
 @withRouter
+@connect(
+    state=>state.chat  //将redux里面的数据传入state  获取未读消息数目
+)
 class NavLinkBar extends React.Component{
     constructor(props){
         super(props)
@@ -17,6 +21,7 @@ class NavLinkBar extends React.Component{
                 <TabBar>
                     {navList.map(v=>(
                         <TabBar.Item
+                            badge={v.path=='/msg'?this.props.unread:null}
                             key={v.path}
                             title={v.text}
                             icon={{uri:require(`./img/${v.icon}.png`)}}

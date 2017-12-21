@@ -20,14 +20,15 @@ io.on('connection',function(socket){ //soket是当前监听的链接  io是全�
         console.log("前台传入的东西",data)
 
         const {from , to ,msg} =data 
-
+        console.log("data2",data)
         //生成唯一id 通过两个用户的id来定义
         const chatid = [from,to].sort().join('_')
+        console.log("后台的chatid",chatid)
         //消息存入数据库
-        Chat.create({chatid,from,to,content:msg},function(err,doc){
+        Chat.create({chatid:chatid,from:from,to:to,content:msg},function(err,doc){
             io.emit('recvmsg',Object.assign({},doc._doc))
         })
-        io.emit('recvmsg',data) //将接受到的数据发送到全局
+        //socket.emit('recvmsg',data) //将接受到的数据发送到全局
     })
 })
 

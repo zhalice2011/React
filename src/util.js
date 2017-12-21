@@ -8,3 +8,11 @@ export function getRedirectPath({type,avatar}){ //专门用来获取用户渲染
     }
     return url
 }
+
+
+
+//获取chatid写成一个公用的函数
+export function getChatId(userId,targetId){
+    console.log("userId,targetId",userId,targetId)
+    return [userId,targetId].sort().join('_')
+}

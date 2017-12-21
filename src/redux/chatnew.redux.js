@@ -9,18 +9,21 @@ const MSG_READ = 'MSG_READ'  //标识已读
 
 const initState = {
     chatmsg:[],//展示每一条聊天信息
-    unred:0//显示未读信息列表
+    users:{},
+    unread:0//显示未读信息列表
 }
 
 //设置reducer  拿到state和action,生成新的state(最终新的state去渲染应用)
 export function chat(state=initState,action){
     switch(action.type){
         case MSG_LIST: //消息列表
-        console.log("unread",action.payload.filter(v=>!v.read.length))
-            return {...state,chatmsg:action.payload,unread:action.payload.filter(v=>!v.read).length}
+            console.log("获取消息列表此时的unread=",action.payload.msgs.filter(v=>!v.read).length)
+            initState.unred
+            return {...state,users:action.payload.users,chatmsg:action.payload.msgs,unread:action.payload.msgs.filter(v=>!v.read).length}
         case MSG_RECV: //接收消息a
-            return {...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unred+1} //每次发送消息 他的未读的消息列表都会增加1
-            return false
+            console.log("接受消息此时的state",state)
+            console.log("接受消息此时的unread=",state.unread+1)
+            return {...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unread+1} //每次发送消息 他的未读的消息列表都会增加1
         case MSG_READ:
             return false
         default:
@@ -29,10 +32,11 @@ export function chat(state=initState,action){
 }
 
 //action creat函数 就是return type和数据的函数
-function msgList(msgs){
-    return {type:MSG_LIST,payload:msgs}   //这个函数就会传入上面的reducer里面的chat 的作为action
+function msgList(msgs,users){
+    return {type:MSG_LIST,payload:{msgs,users}}   //这个函数就会传入上面的reducer里面的chat 的作为action
 }
 function megRecv(msg){
+    console.log("msg22222:",JSON.stringify(msg))
     return {type:MSG_RECV,payload:msg}   
 }
 
@@ -47,7 +51,7 @@ export function getMsgList(){
             .then((res)=>{
                 if(res.status==200&&res.data.code==0){
                     console.log("res",res.data)
-                    dispatch(msgList(res.data.msgs))
+                    dispatch(msgList(res.data.msgs,res.data.users))
                 }
             })
     }
