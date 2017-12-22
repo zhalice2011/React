@@ -15,8 +15,13 @@ import { getMsgList,recvMsg} from '../../redux/chatnew.redux'
     {getMsgList,recvMsg}
 )
 class Dashboard extends React.Component{
-    constructor(props){
-        super(props)
+    componentDidMount(){
+        //简单判断  如果已经有这个信息了 
+        if(!this.props.chat.chatmsg.length){
+            this.props.getMsgList()  //获取消息列表
+            this.props.recvMsg()     //接收消息
+        }
+        
     }
     render(){
         const {pathname} = this.props.location

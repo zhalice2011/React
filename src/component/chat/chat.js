@@ -43,7 +43,7 @@ class Chat extends React.Component{
         this.setState({text:''}) //清空text
     }
     render(){
-        console.log("props",this.props.chat.chatmsg)
+        //console.log("props",this.props.chat.chatmsg)
         //console.log("props",this.props.chat.chatmsg)
         //const chatmsg = this.props.chat.chatmsg || []
         const userid = this.props.match.params.user  //获取当前的user
@@ -54,8 +54,8 @@ class Chat extends React.Component{
         }//getChatId
         const chatid = getChatId(userid, this.props.user._id) //获取chatid
         const chatmsgs = this.props.chat.chatmsg.filter(v=>{
-            console.log("v.chatid=",v.chatid)
-            console.log("chatid=",chatid)
+            //console.log("v.chatid=",v.chatid)
+            //console.log("chatid=",chatid)
             return v.chatid==chatid
         })
         return (

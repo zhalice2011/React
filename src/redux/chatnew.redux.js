@@ -17,13 +17,15 @@ const initState = {
 export function chat(state=initState,action){
     switch(action.type){
         case MSG_LIST: //消息列表
-            console.log("获取消息列表此时的unread=",action.payload.msgs.filter(v=>!v.read).length)
-            initState.unred
-            return {...state,users:action.payload.users,chatmsg:action.payload.msgs,unread:action.payload.msgs.filter(v=>!v.read).length}
+            //console.log("获取消息列表此时的unread=",action.payload.msgs.filter(v=>!v.read).length)
+            initState.unred  
+            return {...state,users:action.payload.users,chatmsg:action.payload.msgs,unread:action.payload.msgs.filter(v=>!v.read&&v.to==action.payload.userid).length}
         case MSG_RECV: //接收消息a
-            console.log("接受消息此时的state",state)
-            console.log("接受消息此时的unread=",state.unread+1)
-            return {...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unread+1} //每次发送消息 他的未读的消息列表都会增加1
+            console.log("action.userid",action.userid)
+            console.log("action.payload.to",action.payload.to)
+            const n = action.payload.to!=action.userid ?1 :0
+            console.log("n",n)
+            return {...state,chatmsg:[...state.chatmsg,action.payload],unread:n} //每次发送消息 他的未读的消息列表都会增加1
         case MSG_READ:
             return false
         default:
@@ -32,12 +34,12 @@ export function chat(state=initState,action){
 }
 
 //action creat函数 就是return type和数据的函数
-function msgList(msgs,users){
-    return {type:MSG_LIST,payload:{msgs,users}}   //这个函数就会传入上面的reducer里面的chat 的作为action
+function msgList(msgs,users,userid){
+    return {type:MSG_LIST,payload:{msgs,users,userid}}   //这个函数就会传入上面的reducer里面的chat 的作为action
 }
-function megRecv(msg){
+function megRecv(msg,userid){
     console.log("msg22222:",JSON.stringify(msg))
-    return {type:MSG_RECV,payload:msg}   
+    return {type:MSG_RECV,payload:msg,userid:userid}   
 }
 
 
@@ -46,12 +48,14 @@ function megRecv(msg){
 //1.一开始进来的时候需要获取消息列表
 export function getMsgList(){
     console.log("getMsgList函数")
-    return dispatch=>{
+    return (dispatch,getState)=>{
         axios.get('/user/getmsglist')
             .then((res)=>{
                 if(res.status==200&&res.data.code==0){
                     console.log("res",res.data)
-                    dispatch(msgList(res.data.msgs,res.data.users))
+                    console.log('getState',getState())
+                    const userid = getState().user._id //获取当前登录的id
+                    dispatch(msgList(res.data.msgs,res.data.users,userid))
                 }
             })
     }
@@ -68,10 +72,11 @@ export function sendMsg(from,to,msg){
 
 //3.接收消息  ---在用户一开始进入聊天应用开始接收信息
 export function recvMsg(){
-    return dispatch=>{
+    return (dispatch,getState)=>{
         socket.on('recvmsg',function(data){
             console.log("前端接收信息",data)
-            dispatch(megRecv(data))
+            const userid = getState().user._id //获取当前登录的id
+            dispatch(megRecv(data,userid))
         })  
     }
 }
