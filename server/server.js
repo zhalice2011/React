@@ -24,8 +24,10 @@ io.on('connection',function(socket){ //soket是当前监听的链接  io是全�
         //生成唯一id 通过两个用户的id来定义
         const chatid = [from,to].sort().join('_')
         console.log("后台的chatid",chatid)
+        const create_time = new Date().getTime()
+        console.log("create_time")
         //消息存入数据库
-        Chat.create({chatid:chatid,from:from,to:to,content:msg},function(err,doc){
+        Chat.create({chatid:chatid,from:from,to:to,content:msg,create_time:create_time},function(err,doc){
             io.emit('recvmsg',Object.assign({},doc._doc))
         })
         //socket.emit('recvmsg',data) //将接受到的数据发送到全局

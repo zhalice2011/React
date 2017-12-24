@@ -24,7 +24,7 @@ const modules = {
         'to':{type:String,require:true}, //要发给谁
         'read':{type:Boolean,default:false}, //是否已读  
         'content':{type:String,require:true,default:''},//发送的内容
-        'creat_time':{type:Number,default:new Date().getTime()},//这个字段是不用传入的  默认每一个都有
+        'create_time':{type:Number,default:new Date().getTime()},//这个字段是不用传入的  默认每一个都有
     }
 }
 

@@ -5,9 +5,9 @@ const User = models.getModels('user')  //获取user模型
 const Chat = models.getModels('chat')  //获取chat模型
 const utils = require('utility')
 const _filter = {'pwd':0,'__v':0}  //一个findcase 不显示password
-//Chat.remove({},function(e,d){
+Chat.remove({},function(e,d){
     
-//})//清空聊天消息
+})//清空聊天消息
 Router.get('/list',function(req,res){
     //const type = req.query.type
     const { type } = req.query  //获取查询参数type
@@ -128,6 +128,7 @@ Router.get('/getmsglist',function(req,res){
         //2.获取该用户聊天信息     过滤  把该用户发出的信息 和 发给该用户的信息都查出来
         Chat.find({'$or':[{from:user},{to:user}]},function(e,doc){
             if(!e) {
+                
                 return res.json({code:0,msgs:doc,users:users})
             }
         })

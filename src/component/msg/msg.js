@@ -34,10 +34,10 @@ class Msg extends React.Component{
         //拿到所有的valuev[0]._id
         const chatlist = Object.values(msgGoup).sort((a,b)=>{
             //console.log(" this.getLast(a)", this.getLast(a))
-            const a_last = this.getLast(a).creat_time //获取最后一个聊天的信息
-            const b_last = this.getLast(b).creat_time //获取最后一个聊天的信息
+            const a_last = this.getLast(a).create_time //获取最后一个聊天的信息
+            const b_last = this.getLast(b).create_time //获取最后一个聊天的信息
             console.log(b_last,a_last)
-            return a_last-b_last
+            return b_last-a_last
             
         })
         console.log("chatlist",chatlist)
@@ -59,9 +59,12 @@ class Msg extends React.Component{
                                 extra={
                                     <Badge text={underadNum}></Badge>
                                 }
-                                
+                                arrow="horizontal"
                                 key={lastItem._id}
                                 thumb={require(`../img/${this.props.chat.users[targetId].avatar}.png`)}
+                                onClick={()=>{
+                                    this.props.history.push(`/chat/${targetId}`)
+                                }}
                             >   {lastItem.content}
                                 <Brief>{name}</Brief>
                             </Item>
